@@ -19,7 +19,7 @@ public class UserControllerTest {
     MockMvc mockMvc;
     @Test
     void should_add_a_user() throws Exception {
-        User user = User.builder().userName("lizeyang").password("123456").email("123@123.com").build();
+        User user = User.builder().username("lizeyang").password("123456").email("123@123.com").build();
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(user);
         mockMvc.perform(post("/register").content(jsonString).contentType(MediaType.APPLICATION_JSON))
