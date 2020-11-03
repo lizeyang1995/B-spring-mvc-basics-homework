@@ -1,6 +1,7 @@
 package com.thoughtworks.capacity.gtb.mvc.service;
 
 import com.thoughtworks.capacity.gtb.mvc.domain.User;
+import com.thoughtworks.capacity.gtb.mvc.exception.UserAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +18,15 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        Map<String, Object> information = new HashMap<>();
-        information.put("username", user.getUsername());
-        information.put("password", user.getPassword());
-        information.put("email", user.getEmail());
-        users.add(information);
+        for (Map<String, Object> existsUser : users) {
+            if (existsUser.get("username").equals(user.getUsername())) {
+                throw new UserAlreadyExistsException("用户已存在");
+            }
+        }
+        Map<String, Object> userInformation = new HashMap<>();
+        userInformation.put("username", user.getUsername());
+        userInformation.put("password", user.getPassword());
+        userInformation.put("email", user.getEmail());
+        users.add(userInformation);
     }
 }
