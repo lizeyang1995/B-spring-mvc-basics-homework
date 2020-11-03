@@ -57,4 +57,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.message", is("用户名不合法")))
                 .andExpect(jsonPath("$.code", is(400)));
     }
+
+    @Test
+    @Order(4)
+    void should_throw_error_when_email_invalid() throws Exception {
+        User user = User.builder().username("lizeyang").password("123456").email("123123.com").build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(user);
+        mockMvc.perform(post("/register").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("邮箱地址不合法")))
+                .andExpect(jsonPath("$.code", is(400)));
+    }
 }
