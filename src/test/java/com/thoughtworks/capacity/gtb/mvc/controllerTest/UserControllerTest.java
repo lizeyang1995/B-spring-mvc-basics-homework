@@ -69,4 +69,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.message", is("邮箱地址不合法")))
                 .andExpect(jsonPath("$.code", is(400)));
     }
+
+    @Test
+    @Order(4)
+    void should_throw_error_when_password_is_null() throws Exception {
+        User user = User.builder().username("lizeyang").password(null).email("123@123.com").build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(user);
+        mockMvc.perform(post("/register").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("密码是不为空")))
+                .andExpect(jsonPath("$.code", is(400)));
+    }
 }
