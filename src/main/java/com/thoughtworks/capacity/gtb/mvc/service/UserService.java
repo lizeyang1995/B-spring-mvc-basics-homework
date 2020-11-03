@@ -2,6 +2,7 @@ package com.thoughtworks.capacity.gtb.mvc.service;
 
 import com.thoughtworks.capacity.gtb.mvc.domain.User;
 import com.thoughtworks.capacity.gtb.mvc.exception.UserAlreadyExistsException;
+import com.thoughtworks.capacity.gtb.mvc.exception.UserNameOrPasswordWrong;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +38,6 @@ public class UserService {
                 return existsUser;
             }
         }
-        return null;
+        throw  new UserNameOrPasswordWrong("用户名或密码错误");
     }
 }

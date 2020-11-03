@@ -23,6 +23,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(UserNameOrPasswordWrong.class)
+    public ResponseEntity userExceptionHandler(UserNameOrPasswordWrong exception) {
+        String errorMessage;
+        errorMessage = exception.getMessage();
+        Error error = new Error();
+        error.setCode(HttpStatus.NOT_FOUND.value());
+        error.setMessage(errorMessage);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity userExceptionHandler(MethodArgumentNotValidException exception) {
         String errorMessage;
