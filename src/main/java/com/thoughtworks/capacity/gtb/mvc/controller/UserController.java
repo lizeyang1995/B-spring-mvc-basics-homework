@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -25,6 +26,7 @@ public class UserController {
     @GetMapping("login")
     public ResponseEntity login(@RequestParam @Size(max = 10, min = 3, message = "用户名不合法") String username,
                                 @RequestParam @Size(max = 12, min = 5, message = "密码不合法") String password) {
-        return ResponseEntity.ok(null);
+        Map<String, Object> user = userService.login(username, password);
+        return ResponseEntity.ok(user);
     }
 }

@@ -24,9 +24,19 @@ public class UserService {
             }
         }
         Map<String, Object> userInformation = new HashMap<>();
+        userInformation.put("id", users.size() + 1);
         userInformation.put("username", user.getUsername());
         userInformation.put("password", user.getPassword());
         userInformation.put("email", user.getEmail());
         users.add(userInformation);
+    }
+
+    public Map<String, Object> login(String username, String password) {
+        for (Map<String, Object> existsUser : users) {
+            if (existsUser.get("username").equals(username) && existsUser.get("password").equals(password)) {
+                return existsUser;
+            }
+        }
+        return null;
     }
 }
