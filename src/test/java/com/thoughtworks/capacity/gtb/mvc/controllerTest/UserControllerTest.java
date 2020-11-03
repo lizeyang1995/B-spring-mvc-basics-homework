@@ -33,6 +33,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/register").content(jsonString).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
+
     @Test
     @Order(2)
     void should_throw_error_when_username_exist() throws Exception {
@@ -42,6 +43,6 @@ public class UserControllerTest {
         mockMvc.perform(post("/register").content(jsonString).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", is("用户已存在")))
-                .andExpect(jsonPath("$.code", is("400")));
+                .andExpect(jsonPath("$.code", is(400)));
     }
 }
