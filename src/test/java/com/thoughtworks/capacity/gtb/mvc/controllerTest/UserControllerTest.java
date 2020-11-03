@@ -117,4 +117,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.email", is("123@123.com")))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @Order(9)
+    void should_throw_given_informal_name_when_login_in() throws Exception {
+        mockMvc.perform(get("/login?username=li&password=123456"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("用户名不合法")))
+                .andExpect(jsonPath("$.code", is(400)));
+    }
 }
