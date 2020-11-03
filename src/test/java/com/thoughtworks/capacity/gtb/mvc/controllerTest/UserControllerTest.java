@@ -135,4 +135,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.message", is("密码不合法")))
                 .andExpect(jsonPath("$.code", is(400)));
     }
+
+    @Test
+    @Order(11)
+    void should_throw_given_wrong_name_when_login_in() throws Exception {
+        mockMvc.perform(get("/login?username=lizey&password=123456"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("用户名或密码错误")))
+                .andExpect(jsonPath("$.code", is(404)));
+    }
 }
