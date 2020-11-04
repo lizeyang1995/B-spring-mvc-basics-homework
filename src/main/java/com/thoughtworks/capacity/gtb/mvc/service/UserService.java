@@ -12,38 +12,26 @@ import java.util.Map;
 
 @Service
 public class UserService {
-    List<Map<String, Object>> users;
-    Map<Integer, User> userMap;
+    private Map<Integer, User> userMap;
 
     public UserService() {
-        this.users = new ArrayList<>();
         this.userMap = new HashMap<>();
     }
 
     public void registerUser(User user) {
-//        for (Map<String, Object> existsUser : users) {
-//            if (existsUser.get("username").equals(user.getUsername())) {
-//                throw new UserAlreadyExistsException("用户已存在");
-//            }
-//        }
-//        Map<String, Object> userInformation = new HashMap<>();
-//        userInformation.put("id", users.size() + 1);
-//        userInformation.put("username", user.getUsername());
-//        userInformation.put("password", user.getPassword());
-//        userInformation.put("email", user.getEmail());
-//        users.add(userInformation);
         for (Map.Entry<Integer, User> existsUser : userMap.entrySet()) {
             if (existsUser.getValue().getUsername().equals(user.getUsername())) {
                 throw new UserAlreadyExistsException("用户已存在");
             }
         }
+        user.setId(userMap.size() + 1);
         userMap.put(userMap.size() + 1, user);
     }
 
-    public Map<String, Object> login(String username, String password) {
-        for (Map<String, Object> existsUser : users) {
-            if (existsUser.get("username").equals(username) && existsUser.get("password").equals(password)) {
-                return existsUser;
+    public User login(String username, String password) {
+        for (Map.Entry<Integer, User> existsUser : userMap.entrySet()) {
+            if (existsUser.getValue().getUsername().equals(username) && existsUser.getValue().getPassword().equals(password)) {
+                return existsUser.getValue();
             }
         }
         throw  new UserNameOrPasswordWrong("用户名或密码错误");

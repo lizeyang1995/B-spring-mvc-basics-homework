@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("login")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, Object> login(@RequestParam
+    public User login(@RequestParam
                                 @Size(max = 10, min = 3, message = "用户名不合法")
                                 @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "用户名不合法")String username,
                                 @RequestParam

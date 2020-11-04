@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Valid
 public class User {
-    @Generated
     private Integer id;
     @NotBlank(message = "用户名不为空")
     @Size(max = 10, min = 3, message = "用户名不合法")
