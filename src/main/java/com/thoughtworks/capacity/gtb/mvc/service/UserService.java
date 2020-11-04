@@ -12,26 +12,26 @@ import java.util.Map;
 
 @Service
 public class UserService {
-    private Map<Integer, User> userMap;
+    private List<User> users;
 
     public UserService() {
-        this.userMap = new HashMap<>();
+        this.users = new ArrayList<>();
     }
 
     public void registerUser(User user) {
-        for (Map.Entry<Integer, User> existsUser : userMap.entrySet()) {
-            if (existsUser.getValue().getUsername().equals(user.getUsername())) {
+        for (User existsUser : users) {
+            if (existsUser.getUsername().equals(user.getUsername())) {
                 throw new UserAlreadyExistsException("用户已存在");
             }
         }
-        user.setId(userMap.size() + 1);
-        userMap.put(userMap.size() + 1, user);
+        user.setId(users.size() + 1);
+        users.add(user);
     }
 
     public User login(String username, String password) {
-        for (Map.Entry<Integer, User> existsUser : userMap.entrySet()) {
-            if (existsUser.getValue().getUsername().equals(username) && existsUser.getValue().getPassword().equals(password)) {
-                return existsUser.getValue();
+        for (User existsUser : users) {
+            if (existsUser.getUsername().equals(username) && existsUser.getPassword().equals(password)) {
+                return existsUser;
             }
         }
         throw  new UserNameOrPasswordWrong("用户名或密码错误");
