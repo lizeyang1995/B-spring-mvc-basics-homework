@@ -2,6 +2,7 @@ package com.thoughtworks.capacity.gtb.mvc.controller;
 
 import com.thoughtworks.capacity.gtb.mvc.domain.User;
 import com.thoughtworks.capacity.gtb.mvc.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,18 +22,18 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public ResponseEntity registerUser(@RequestBody @Valid User user) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerUser(@RequestBody @Valid User user) {
         userService.registerUser(user);
-        return ResponseEntity.created(null).build();
     }
 
     @GetMapping("login")
-    public ResponseEntity login(@RequestParam
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, Object> login(@RequestParam
                                 @Size(max = 10, min = 3, message = "用户名不合法")
                                 @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "用户名不合法")String username,
                                 @RequestParam
                                 @Size(max = 12, min = 5, message = "密码不合法") String password) {
-        Map<String, Object> user = userService.login(username, password);
-        return ResponseEntity.ok(user);
+        return userService.login(username, password);
     }
 }
